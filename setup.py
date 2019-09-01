@@ -29,5 +29,10 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Intended Audience :: Developers",
     ],
+    entry_points={
+        'console_scripts': [
+            'pycreator = pycreator_tkinter.pycreator_app:launch',
+        ],
+    },
     install_requires=["PyCreator-Core"]
 )
