@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from pycreator_tkinter.Core.Widgets.FilesWidget import FilesWidget
-from pycreator_tkinter.Core.Widgets.TabEditorWidget import TabEditorWidget
+from pycreator_tkinter.Core.Widgets import FilesWidget, TabEditorWidget
+from pycreator_tkinter.Core.Menus import FileMenu, ExecuteMenu, CodeMenu, ParametersMenu
 
 
 class Window(tk.Tk):
@@ -10,6 +10,11 @@ class Window(tk.Tk):
         self.title("PyCreator")
         self.state("zoomed")
 
+        self.menu = tk.Menu(self)
+        self.filemenu = FileMenu(self, self.menu)
+        self.executemenu = ExecuteMenu(self, self.menu)
+        self.codemenu = CodeMenu(self, self.menu)
+        self.parametersmenu = ParametersMenu(self, self.menu)
         self.filesview = FilesWidget(self)
         self.tabeditor = TabEditorWidget(self)
 
@@ -18,6 +23,13 @@ class Window(tk.Tk):
         self.mainloop()
 
     def setup_ui(self):
+        self.menu.add_cascade(label="Fichier", menu=self.filemenu)
+        self.menu.add_cascade(label="Executer", menu=self.executemenu)
+        self.menu.add_cascade(label="Code", menu=self.codemenu)
+        self.menu.add_cascade(label="Paramètres", menu=self.parametersmenu)
+
+        self.config(menu=self.menu)
+
         self.filesview.grid(row=0, column=0, sticky='nesw')
         self.tabeditor.grid(row=0, column=1, sticky='nesw')
 
