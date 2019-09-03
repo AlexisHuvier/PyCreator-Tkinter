@@ -1,6 +1,6 @@
 from tkinter import Menu
-from pycreator_core import execute_file, FileSystem
-
+from pycreator_core import FileSystem
+from pycreator_tkinter.Core.Windows import Console
 
 class ExecuteMenu(Menu):
     def __init__(self, window, menu):
@@ -19,5 +19,6 @@ class ExecuteMenu(Menu):
             text = editor.get('1.0', 'end')[:-1]
             if FileSystem.open(filename) != text:
                 FileSystem.save(filename, text)
-            print(execute_file(filename, text))
+            top = Console(self.window, filename)
+
 
