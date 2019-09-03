@@ -3,10 +3,15 @@ import tkinter as tk
 from pycreator_tkinter.Core.Widgets import FilesWidget, TabEditorWidget
 from pycreator_tkinter.Core.Menus import FileMenu, ExecuteMenu, CodeMenu, ParametersMenu
 
+from pycreator_core import Config, Analyser
+
 
 class Window(tk.Tk):
     def __init__(self):
         super(Window, self).__init__()
+        self.config = Config()
+        self.analyser = Analyser(self.config)
+
         self.title("PyCreator")
         self.state("zoomed")
 
