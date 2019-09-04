@@ -9,8 +9,8 @@ from pycreator_core import Config, Analyser
 class Window(tk.Tk):
     def __init__(self):
         super(Window, self).__init__()
-        self.config = Config()
-        self.analyser = Analyser(self.config)
+        self.conf = Config()
+        self.analyser = Analyser(self.conf)
 
         self.title("PyCreator")
         self.state("zoomed")

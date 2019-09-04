@@ -4,12 +4,14 @@ from pycreator_tkinter.Core.Widgets.EditorWidget import EditorWidget
 
 
 class TabEditorWidget(Notebook):
-    def __init__(self, parent):
-        super(TabEditorWidget, self).__init__(parent)
+    def __init__(self, window):
+        super(TabEditorWidget, self).__init__(window)
+        self.window = window
         self.tabnames = []
 
     def add_tab(self, file):
         if file not in self.tabnames:
             self.add(EditorWidget(self, file), text=file)
             self.tabnames.append(file)
+            self.select(self.tabs()[-1])
 
