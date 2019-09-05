@@ -1,4 +1,4 @@
-from tkinter import Menu
+from tkinter import Menu, filedialog
 import os
 
 from pycreator_tkinter.Core.Windows import AskText
@@ -13,12 +13,26 @@ class FileMenu(Menu):
 
         self.ask = None  # Respect PEP8
 
-        self.add_command(label="Ouvrir")
+        self.add_command(label="Ouvrir Dossier", command=self.open_folder)
+        self.add_command(label="Ouvrir Fichier", command=self.open_file)
+        self.add_separator()
         self.add_command(label="Sauvegarder", command=self.save)
         self.add_command(label="Sauvegarder Sous", command=self.saveas)
         self.add_command(label="Nouveau", command=self.new)
         self.add_separator()
         self.add_command(label="Quitter", command=self.window.destroy)
+
+    def open_folder(self):
+        directory = filedialog.askdirectory(title="Choisissez le dossier")
+        if directory != "":
+            self.window.filesview.folder = directory
+            self.window.filesview.update_items(delete=True)
+
+    def open_file(self):
+        file = filedialog.askopenfilename(title="Choisissez le fichier", defaultextension='.py',
+                                          filetypes=[('Fichier Python', '.py')])
+        if file != "":
+            self.window.tabeditor.add_tab(file)
 
     def save(self):
         selected = self.window.tabeditor.select()

@@ -26,9 +26,11 @@ class FilesWidget(ttk.Treeview):
         if os.path.isfile(os.path.join(self.folder, file)):
             self.window.tabeditor.add_tab(os.path.join(self.folder, file))
     
-    def update_items(self, directory=None, parent=''):
+    def update_items(self, directory=None, parent='', delete=False):
         if directory is None:
             directory = self.folder
+        if delete:
+            self.delete(*self.get_children())
 
         files = FileSystem.list_files(directory)
         for k, v in files.items():
