@@ -14,17 +14,31 @@ class FileMenu(Menu):
         self.ask = None  # Respect PEP8
 
         self.add_command(label="Ouvrir")
-        self.add_command(label="Sauvegarder")
-        self.add_command(label="Sauvegarder Sous")
         self.add_command(label="Sauvegarder", command=self.save)
+        self.add_command(label="Sauvegarder Sous", command=self.saveas)
         self.add_command(label="Nouveau", command=self.new)
         self.add_separator()
-        self.add_command(label="Quitter")
+        self.add_command(label="Quitter", command=self.window.destroy)
+
     def save(self):
         selected = self.window.tabeditor.select()
         if selected:
             save_code(self.window, selected)
 
+    def saveas(self):
+        self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_save)
+
+    def validate_save(self):
+        selected = self.window.tabeditor.select()
+        if selected:
+            save = self.ask.entry.get()
+            if save != "":
+                if "." in save:
+                    save_code(self.window, selected, os.path.join(self.window.filesview.folder, save))
+                else:
+                    save_code(self.window, selected, os.path.join(self.window.filesview.folder, save+".py"))
+                self.ask.destroy()
+                self.window.filesview.update_items()
 
     def new(self):
         self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_new)
