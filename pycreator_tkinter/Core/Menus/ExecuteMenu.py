@@ -1,6 +1,7 @@
 from tkinter import Menu
-from pycreator_core import FileSystem
 from pycreator_tkinter.Core.Windows import Console
+from pycreator_tkinter.Core.Utils import save_code
+
 
 class ExecuteMenu(Menu):
     def __init__(self, window, menu):
@@ -14,11 +15,6 @@ class ExecuteMenu(Menu):
     def execute(self):
         selected = self.window.tabeditor.select()
         if selected:
-            filename = self.window.tabeditor.tab(selected, 'text')
-            editor = self.window.tabeditor.nametowidget(selected)
-            text = editor.get('1.0', 'end')[:-1]
-            if FileSystem.open(filename) != text:
-                FileSystem.save(filename, text)
-            top = Console(self.window, filename)
+            Console(self.window, save_code(self.window, selected))
 
 

@@ -3,6 +3,7 @@ import os
 
 from pycreator_tkinter.Core.Windows import AskText
 from pycreator_core import FileSystem
+from pycreator_tkinter.Core.Utils import save_code
 
 
 class FileMenu(Menu):
@@ -15,9 +16,15 @@ class FileMenu(Menu):
         self.add_command(label="Ouvrir")
         self.add_command(label="Sauvegarder")
         self.add_command(label="Sauvegarder Sous")
+        self.add_command(label="Sauvegarder", command=self.save)
         self.add_command(label="Nouveau", command=self.new)
         self.add_separator()
         self.add_command(label="Quitter")
+    def save(self):
+        selected = self.window.tabeditor.select()
+        if selected:
+            save_code(self.window, selected)
+
 
     def new(self):
         self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_new)
