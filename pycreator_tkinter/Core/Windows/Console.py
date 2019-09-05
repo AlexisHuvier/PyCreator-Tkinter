@@ -13,6 +13,6 @@ class Console(Toplevel):
 
         if file is not None:
             self.text.insert('1.0', execute_file(file, FileSystem.open(file)))
-            self.text.insert('end', "\n>>>")
+            self.text.insert('end', ">>> ")
         else:
-            self.text.insert('1.0', ">>>")
+            self.text.insert('1.0', ">>> ")
