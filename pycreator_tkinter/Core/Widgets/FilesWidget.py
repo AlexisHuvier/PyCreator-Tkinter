@@ -9,7 +9,9 @@ class FilesWidget(ttk.Treeview):
         super(FilesWidget, self).__init__(window, show="tree")
         self.window = window
         self.bind("<Double-1>", self.double_click)
-        self.folder = r"D:\Programmation\Python\Projet\PyCreator\Tests"
+        self.folder = self.window.conf.get("folder", "")
+        if self.folder == "":
+            self.folder = "."
         self.update_items(self.folder)
 
     def double_click(self, event):

@@ -25,6 +25,7 @@ class Window(tk.Tk):
 
         self.setup_ui()
 
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
         self.mainloop()
 
     def setup_ui(self):
@@ -41,3 +42,8 @@ class Window(tk.Tk):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=4)
+
+    def on_close(self):
+        self.conf.set("folder", self.filesview.folder)
+        self.conf.save()
+        self.destroy()
