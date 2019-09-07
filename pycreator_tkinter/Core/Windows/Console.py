@@ -1,5 +1,5 @@
 from tkinter import Toplevel, Text
-from pycreator_core import execute_file, FileSystem, History
+from pycreator_core import execute_file, History
 
 
 class Console(Toplevel):
@@ -12,7 +12,10 @@ class Console(Toplevel):
         self.text.pack()
 
         if file is not None:
-            self.text.insert('1.0', execute_file(file, FileSystem.open(file)))
+            execute_file(file, self.write)
             self.text.insert('end', ">>> ")
         else:
             self.text.insert('1.0', ">>> ")
+
+    def write(self, data):
+        self.text.insert('end', data)
