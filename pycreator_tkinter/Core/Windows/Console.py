@@ -1,5 +1,6 @@
 from tkinter import Toplevel, Text
 from pycreator_core import execute_file, History
+from threading import Thread
 
 
 class Console(Toplevel):
@@ -12,10 +13,14 @@ class Console(Toplevel):
         self.text.pack()
 
         if file is not None:
-            execute_file(file, self.write)
-            self.text.insert('end', ">>> ")
+            p = Thread(target=self.execute, args=(file,))
+            p.start()
         else:
             self.text.insert('1.0', ">>> ")
+
+    def execute(self, file):
+        execute_file(file, self.write)
+        self.text.insert('end', ">>> ")
 
     def write(self, data):
         self.text.insert('end', data)
