@@ -12,7 +12,11 @@ class ParametersMenu(Menu):
         self.add_command(label="Addons")
         self.add_command(label="Paramètres")
         self.add_separator()
-        self.add_command(label="A Propos")
+        self.add_command(label="A Propos", command=self.open_info)
+
+    def open_info(self):
+        Informations(self.window)
+
     def open_theme(self):
         Themes(self.window)
 
