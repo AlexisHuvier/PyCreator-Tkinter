@@ -9,6 +9,11 @@ class TabEditorWidget(Notebook):
         self.window = window
         self.tabnames = []
 
+    def remove_tab(self, file):
+        for i in self.tabs():
+            if self.tab(i, "text") == file:
+                self.forget(i)
+
     def add_tab(self, file):
         if file not in self.tabnames:
             self.add(EditorWidget(self, file), text=file)
