@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter.ttk import Style
 
 from pycreator_tkinter.Core.Widgets import FilesWidget, TabEditorWidget
 from pycreator_tkinter.Core.Menus import FileMenu, ExecuteMenu, CodeMenu, ParametersMenu
@@ -11,6 +12,9 @@ class Window(tk.Tk):
         super(Window, self).__init__()
         self.conf = Config()
         self.analyser = Analyser(self.conf)
+
+        self.theme = None  # Respect PEP8
+        self.set_theme(self.conf.get("gui.tkinter.theme", "default"))
 
         self.title("PyCreator")
         self.state("zoomed")
@@ -43,7 +47,13 @@ class Window(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=4)
 
+    def set_theme(self, theme):
+        self.theme = theme
+        Style().theme_use(theme)
+
     def on_close(self):
         self.conf.set("folder", self.filesview.folder)
+
+        self.conf.set("gui.tkinter.theme", self.theme)
         self.conf.save()
         self.destroy()
