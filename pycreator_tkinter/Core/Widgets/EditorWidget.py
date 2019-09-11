@@ -72,7 +72,7 @@ class EditorWidget(Text):
                     break
                 self.tag_add('String2', last_pos, "%s + %d chars" % (last_pos, numb_char.get()))
                 last_pos = "%s + 1 chars" % last_pos
-        for mot in ['\{', '\}', '\(', '\)', '\[', '\]', ]:
+        for mot in ['{', '}', '(', ')', '[', ']', ]:
             last_pos = "1.0"
             while 1:
                 last_pos = self.search(mot, index=last_pos, stopindex='end', regexp=0, count=numb_char)
@@ -80,8 +80,8 @@ class EditorWidget(Text):
                     break
                 self.tag_add('Brace', last_pos, "%s + %d chars" % (last_pos, numb_char.get()))
                 last_pos = "%s + 1 chars" % last_pos
-        for mot in ['=', '==', '!=', '<', '<=', '>', '>=', '\+', '-', '\*', '/', '//', '\%', '\*\*', '\+=', '-=', '\*=',
-                    '/=', '\%=', '\^', '\|', '\&', '\~', '>>', '<<']:
+        for mot in ['=', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '//', '%', '**', '+=', '-=', '*=',
+                    '/=', '%=', '^', '|', '&', '~', '>>', '<<']:
             last_pos = "1.0"
             while 1:
                 last_pos = self.search(mot, index=last_pos, stopindex='end', regexp=0, count=numb_char)
