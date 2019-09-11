@@ -45,24 +45,20 @@ class FileMenu(Menu):
             self.window.filesview.update_items(delete=True)
 
     def save(self):
-        selected = self.window.tabeditor.select()
-        if selected:
-            save_code(self.window, selected)
+        save_code(self.window)
 
     def saveas(self):
         self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_save)
 
     def validate_save(self):
-        selected = self.window.tabeditor.select()
-        if selected:
-            save = self.ask.entry.get()
-            if save != "":
-                if "." in save:
-                    save_code(self.window, selected, os.path.join(self.window.filesview.folder, save))
-                else:
-                    save_code(self.window, selected, os.path.join(self.window.filesview.folder, save+".py"))
-                self.ask.destroy()
-                self.window.filesview.update_items()
+        save = self.ask.entry.get()
+        if save != "":
+            if "." in save:
+                save_code(self.window, os.path.join(self.window.filesview.folder, save))
+            else:
+                save_code(self.window, os.path.join(self.window.filesview.folder, save+".py"))
+            self.ask.destroy()
+            self.window.filesview.update_items()
 
     def new(self):
         self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_new)
