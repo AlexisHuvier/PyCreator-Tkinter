@@ -18,6 +18,7 @@ class FileMenu(Menu):
         self.add_separator()
         self.add_command(label="Sauvegarder", command=self.save)
         self.add_command(label="Sauvegarder Sous", command=self.saveas)
+        self.add_command(label="Supprimer", command=self.delete_file)
         self.add_command(label="Nouveau", command=self.new)
         self.add_separator()
         self.add_command(label="Quitter", command=self.window.destroy)
@@ -33,6 +34,15 @@ class FileMenu(Menu):
                                           filetypes=[('Fichier Python', '.py')])
         if file != "":
             self.window.tabeditor.add_tab(file)
+
+    def delete_file(self):
+        if len(self.window.filesview.selection()):
+            item = self.window.filesview.item(self.window.filesview.selection()[0], "text")
+            file = os.path.join(self.window.filesview.folder, item)
+            os.remove(file)
+            if file in self.window.tabeditor.tabnames:
+                self.window.tabeditor.remove_tab(file)
+            self.window.filesview.update_items(delete=True)
 
     def save(self):
         selected = self.window.tabeditor.select()
