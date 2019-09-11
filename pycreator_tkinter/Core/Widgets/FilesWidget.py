@@ -1,10 +1,11 @@
-from tkinter import ttk, TclError
+from tkinter import TclError
+from tkinter.ttk import Treeview
 import os
 
 from pycreator_core import FileSystem
 
 
-class FilesWidget(ttk.Treeview):
+class FilesWidget(Treeview):
     def __init__(self, window):
         super(FilesWidget, self).__init__(window, show="tree")
         self.window = window
@@ -16,15 +17,16 @@ class FilesWidget(ttk.Treeview):
 
     def double_click(self, event):
         liste = []
-        item = self.selection()[0]
-        liste.append(self.item(item, "text"))
-        while self.parent(item) != '':
-            item = self.parent(item)
+        if len(self.selection()):
+            item = self.selection()[0]
             liste.append(self.item(item, "text"))
-        liste.reverse()
-        file = os.path.join(*liste)
-        if os.path.isfile(os.path.join(self.folder, file)):
-            self.window.tabeditor.add_tab(os.path.join(self.folder, file))
+            while self.parent(item) != '':
+                item = self.parent(item)
+                liste.append(self.item(item, "text"))
+            liste.reverse()
+            file = os.path.join(*liste)
+            if os.path.isfile(os.path.join(self.folder, file)):
+                self.window.tabeditor.add_tab(os.path.join(self.folder, file))
     
     def update_items(self, directory=None, parent='', delete=False):
         if directory is None:
