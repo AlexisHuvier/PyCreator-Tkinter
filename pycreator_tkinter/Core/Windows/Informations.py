@@ -3,6 +3,7 @@ from tkinter.ttk import Label, __version__
 
 import pycreator_tkinter
 import pycreator_core
+import sys
 
 
 class Informations(Toplevel):
@@ -17,6 +18,8 @@ class Informations(Toplevel):
         versiontkinter = Label(self, text="Version Tkinter : " + str(TkVersion))
         versionttk = Label(self, text="Version Ttk : " + __version__)
         versiontcl = Label(self, text="Version Tcl : " + str(TclVersion))
+        v = str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro)
+        versionpython = Label(self, text="Version Python : " + v)
 
         title.pack(padx=10, pady=10)
         author.pack(padx=10, pady=5)
@@ -25,5 +28,6 @@ class Informations(Toplevel):
         versiontkinter.pack(padx=10, pady=5)
         versionttk.pack(padx=10, pady=5)
         versiontcl.pack(padx=10, pady=5)
+        versionpython.pack(padx=10, pady=5)
 
         self.title("PyCreator - Informations")
