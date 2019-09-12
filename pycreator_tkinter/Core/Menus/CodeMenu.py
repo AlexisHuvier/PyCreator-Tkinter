@@ -1,6 +1,6 @@
 from tkinter import Menu
 
-from pycreator_tkinter.Core.Utils import replace_code, add_begin_code, remove_begin_code
+from pycreator_tkinter.Core.Utils import replace_code, add_begin_code, remove_begin_code, get_editor
 from pycreator_tkinter.Core.Windows import Documentation
 
 
@@ -9,7 +9,7 @@ class CodeMenu(Menu):
         super(CodeMenu, self).__init__(menu, tearoff=0)
         self.window = window
 
-        self.add_command(label="Informations")
+        self.add_command(label="Informations", command=self.information)
         self.add_command(label="Documentation", command=self.documentation)
         self.add_separator()
         self.add_command(label="Indenter", command=self.indenter)
@@ -20,6 +20,13 @@ class CodeMenu(Menu):
         self.add_separator()
         self.add_command(label="Espaces -> Tabs", command=self.spacestotabs)
         self.add_command(label="Tabs -> Espaces", command=self.tabstospaces)
+
+    def information(self):
+        selected = self.window.tabeditor.select()
+        if selected:
+            filename = self.window.tabeditor.tab(selected, 'text')
+            filename = filename.replace("*", "")
+            print(self.window.analyser.information_file(filename))
 
     def documentation(self):
         Documentation(self.window)
