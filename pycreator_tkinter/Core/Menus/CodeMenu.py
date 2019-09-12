@@ -1,6 +1,7 @@
-from tkinter import Menu, IntVar, TclError
+from tkinter import Menu
 
-from pycreator_tkinter.Core.Utils import replace_code, get_editor, add_begin_code, remove_begin_code
+from pycreator_tkinter.Core.Utils import replace_code, add_begin_code, remove_begin_code
+from pycreator_tkinter.Core.Windows import Documentation
 
 
 class CodeMenu(Menu):
@@ -9,6 +10,7 @@ class CodeMenu(Menu):
         self.window = window
 
         self.add_command(label="Informations")
+        self.add_command(label="Documentation", command=self.documentation)
         self.add_separator()
         self.add_command(label="Indenter", command=self.indenter)
         self.add_command(label="Désindenter", command=self.desindenter)
@@ -18,6 +20,9 @@ class CodeMenu(Menu):
         self.add_separator()
         self.add_command(label="Espaces -> Tabs", command=self.spacestotabs)
         self.add_command(label="Tabs -> Espaces", command=self.tabstospaces)
+
+    def documentation(self):
+        Documentation(self.window)
 
     def indenter(self):
         add_begin_code(self.window, "\t")
