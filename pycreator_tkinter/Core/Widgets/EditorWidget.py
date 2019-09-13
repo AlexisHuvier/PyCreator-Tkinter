@@ -12,6 +12,16 @@ class EditorWidget(Text):
         self.insert('1.0', FileSystem.open(self.file))
 
         self.config(tabs=('1c', '2c'))
+        self.tags = {
+            'Keyword': {"foreground": "#0000FF"},
+            "Operator": {"foreground": "#FF0000"},
+            "Brace": {"foreground": "#808080"},
+            "String": {"foreground": "#FF00FF"},
+            "String2": {"foreground": "#800080"},
+            "Comment": {"foreground": "#C8C8C8", "font": Font(font=self["font"], slant="italic")},
+            "Self": {"foreground": "#000000", "font": Font(font=self["font"], slant="italic")},
+            "Numbers": {"foreground": "#00FF00"}
+        }
         self.setup_hightlighter()
         self.apply_hightlighter()
         self.bind('<Key>', self.key_pressed)
@@ -31,16 +41,13 @@ class EditorWidget(Text):
         self.edit_modified(False)
 
     def setup_hightlighter(self):
-        self.tag_config('Keyword', foreground="#0000FF")
-        self.tag_config("Operator", foreground="#FF0000")
-        self.tag_config("Brace", foreground="#808080")
-        self.tag_config("String", foreground="#FF00FF")
-        self.tag_config("String2", foreground="#800080")
-        self.tag_config("Comment", foreground="#C8C8C8", font=Font(font=self["font"], slant="italic"))
-        self.tag_config("Self", foreground="#000000", font=Font(font=self["font"], slant="italic"))
-        self.tag_config("Numbers", foreground="#00FF00")
+        for k, v in self.tags.items():
+            self.tag_config(k, **v)
 
     def apply_hightlighter(self):
+        for i in self.tags.keys():
+            self.tag_remove(i, "1.0", "end")
+
         numb_char = IntVar()
         last_pos = "1.0"
         while 1:
