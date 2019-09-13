@@ -23,13 +23,13 @@ class FileMenu(Menu):
         self.add_separator()
         self.add_command(label="Quitter", command=self.window.destroy)
 
-    def open_folder(self):
+    def open_folder(self, evt=None):  # Can be use by events
         directory = filedialog.askdirectory(title="Choisissez le dossier")
         if directory != "":
             self.window.filesview.folder = directory
             self.window.filesview.update_items(delete=True)
 
-    def open_file(self):
+    def open_file(self, evt=None):  # Can be use by events
         file = filedialog.askopenfilename(title="Choisissez le fichier", defaultextension='.py',
                                           filetypes=[('Fichier Python', '.py')])
         if file != "":
@@ -44,7 +44,7 @@ class FileMenu(Menu):
                 self.window.tabeditor.remove_tab(file)
             self.window.filesview.update_items(delete=True)
 
-    def save(self):
+    def save(self, evt=None):  # Can be use by events
         save_code(self.window)
 
     def saveas(self):
@@ -60,7 +60,7 @@ class FileMenu(Menu):
             self.ask.destroy()
             self.window.filesview.update_items()
 
-    def new(self):
+    def new(self, evt=None):  # Can be use by events
         self.ask = AskText(self.window, "Nom du fichier", "Entrez le nom du fichier", self.validate_new)
 
     def validate_new(self):

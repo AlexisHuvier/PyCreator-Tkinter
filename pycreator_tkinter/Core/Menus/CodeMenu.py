@@ -31,10 +31,10 @@ class CodeMenu(Menu):
     def documentation(self):
         Documentation(self.window)
 
-    def indenter(self):
+    def indenter(self, evt=None):  # Can be use by events
         add_begin_code(self.window, "\t")
 
-    def desindenter(self):
+    def desindenter(self, evt=None):  # Can be use by events
         remove_begin_code(self.window, "\t")
 
     def comment(self):

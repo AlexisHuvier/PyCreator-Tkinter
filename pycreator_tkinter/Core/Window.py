@@ -28,9 +28,19 @@ class Window(tk.Tk):
         self.tabeditor = TabEditorWidget(self)
 
         self.setup_ui()
+        self.bind_event()
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
         self.mainloop()
+
+    def bind_event(self):
+        self.bind_all("<Control-KeyPress-o>", self.filemenu.open_file)
+        self.bind_all("<Control-KeyPress-n>", self.filemenu.new)
+        self.bind_all("<Control-KeyPress-i>", self.parametersmenu.open_info)
+        self.bind_all("<Control-KeyPress-s>", self.filemenu.save)
+        self.bind_all("<Control-KeyPress-d>", self.filemenu.open_folder)
+        self.bind_all("<Control-KeyPress-t>", self.codemenu.indenter)
+        self.bind_all("<Alt-KeyPress-t>", self.codemenu.desindenter)
 
     def setup_ui(self):
         self.menu.add_cascade(label="Fichier", menu=self.filemenu)

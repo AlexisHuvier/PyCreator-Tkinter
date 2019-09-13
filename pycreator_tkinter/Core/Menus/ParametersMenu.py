@@ -14,7 +14,7 @@ class ParametersMenu(Menu):
         self.add_separator()
         self.add_command(label="A Propos", command=self.open_info)
 
-    def open_info(self):
+    def open_info(self, evt=None):  # Can be use by events
         Informations(self.window)
 
     def open_theme(self):
