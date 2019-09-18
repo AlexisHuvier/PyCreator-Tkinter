@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.ttk import Style
+from tkinter.ttk import Style, Scrollbar
 
 from pycreator_tkinter.Core.Widgets import FilesWidget, TabEditorWidget
 from pycreator_tkinter.Core.Menus import FileMenu, ExecuteMenu, CodeMenu, ParametersMenu
@@ -26,6 +26,8 @@ class Window(tk.Tk):
         self.parametersmenu = ParametersMenu(self, self.menu)
         self.filesview = FilesWidget(self)
         self.tabeditor = TabEditorWidget(self)
+        self.sh = Scrollbar()
+        self.sv = Scrollbar()
 
         self.setup_ui()
         self.bind_event()
@@ -49,13 +51,16 @@ class Window(tk.Tk):
         self.menu.add_cascade(label="Paramètres", menu=self.parametersmenu)
 
         self.config(menu=self.menu)
+        self.sh.config(orient="horizontal")
 
-        self.filesview.grid(row=0, column=0, sticky='nesw')
-        self.tabeditor.grid(row=0, column=1, sticky='nesw')
+        self.filesview.grid(row=0, column=0, rowspan=2, sticky="news")
+        self.tabeditor.grid(row=0, column=1, sticky="news")
+        self.sh.grid(row=1, column=1, sticky="news")
+        self.sv.grid(row=0, column=2, rowspan=2, sticky="news")
 
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=4)
+        self.columnconfigure(1, weight=5)
 
     def set_theme(self, theme):
         self.theme = theme
