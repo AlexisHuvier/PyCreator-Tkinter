@@ -1,6 +1,11 @@
-from tkinter import Menu
+import sys
+from tkinter import Menu, TkVersion, TclVersion
+from tkinter.ttk import __version__
 
-from pycreator_tkinter.Core.Windows import Informations, Themes
+import pycreator_core
+
+import pycreator_tkinter
+from pycreator_tkinter.Core.Windows import TextWindow, Themes
 
 
 class ParametersMenu(Menu):
@@ -15,7 +20,12 @@ class ParametersMenu(Menu):
         self.add_command(label="A Propos", command=self.open_info)
 
     def open_info(self, evt=None):  # Can be use by events
-        Informations(self.window)
+        v = str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro)
+        TextWindow(self.window, "PyEngine - A Propos", "A Propos", (
+            "Auteur : LavaPower", "Version PyCreator-Tkinter : " + pycreator_tkinter.__version__,
+            "Version PyCreator-Core : " + pycreator_core.__version__, "Version Tkinter : " + str(TkVersion),
+            "Version Ttk : " + __version__, "Version Tcl : " + str(TclVersion), "Version Python : " + v
+        ))
 
     def open_theme(self):
         Themes(self.window)
