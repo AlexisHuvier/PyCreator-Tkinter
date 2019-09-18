@@ -18,7 +18,7 @@ class EditorWidget(Text):
             "Brace": {"foreground": "#808080"},
             "String": {"foreground": "#FF00FF"},
             "String2": {"foreground": "#800080"},
-            "Comment": {"foreground": "#C8C8C8", "font": Font(font=self["font"], slant="italic")},
+            "Comment": {"foreground": "#777777", "font": Font(font=self["font"], slant="italic")},
             "Self": {"foreground": "#000000", "font": Font(font=self["font"], slant="italic")},
             "Numbers": {"foreground": "#00FF00"}
         }
