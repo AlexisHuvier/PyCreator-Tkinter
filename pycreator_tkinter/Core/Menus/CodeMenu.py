@@ -1,7 +1,8 @@
 from tkinter import Menu
+import os.path
 
-from pycreator_tkinter.Core.Utils import replace_code, add_begin_code, remove_begin_code, get_editor
-from pycreator_tkinter.Core.Windows import Documentation
+from pycreator_tkinter.Core.Utils import replace_code, add_begin_code, remove_begin_code
+from pycreator_tkinter.Core.Windows import Documentation, TextWindow
 
 
 class CodeMenu(Menu):
@@ -26,7 +27,12 @@ class CodeMenu(Menu):
         if selected:
             filename = self.window.tabeditor.tab(selected, 'text')
             filename = filename.replace("*", "")
-            print(self.window.analyser.information_file(filename))
+            infos = self.window.analyser.information_file(filename)
+            TextWindow(self.window, "PyEngine - Information", "Information sur "+os.path.basename(filename), (
+                "Nombre de lignes : " + str(len(infos["lines"])),
+                "Nombre de commentaires : " + str(len(infos["comments"])),
+                "Variables (" + str(len(infos["variables"])) + ") : " + ", ".join(infos["variables"])
+            ))
 
     def documentation(self):
         Documentation(self.window)
