@@ -1,5 +1,5 @@
 from tkinter import Toplevel, Text
-from pycreator_core import execute_file, History
+from pycreator_core import execute_file, execute_interactive, History
 from threading import Thread
 
 
@@ -17,6 +17,13 @@ class Console(Toplevel):
             p.start()
         else:
             self.text.insert('1.0', ">>> ")
+
+        self.bind("<KeyPress-Return>", self.enter)
+
+    def enter(self, evt):
+        code = self.text.get("1.0", "end").split(">>> ")[-1].replace("\n\n", "")
+        execute_interactive(code, self.write)
+        self.text.insert('end', ">>> ")
 
     def execute(self, file):
         execute_file(file, self.write)

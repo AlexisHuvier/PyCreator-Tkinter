@@ -10,7 +10,10 @@ class ExecuteMenu(Menu):
 
         self.add_command(label="Executer", command=self.execute)
         self.add_command(label="Débugguer")
-        self.add_command(label="Console")
+        self.add_command(label="Console", command=self.console)
+
+    def console(self):
+        Console(self.window)
 
     def execute(self):
         selected = self.window.tabeditor.select()
