@@ -1,5 +1,5 @@
 from tkinter import Toplevel, Text
-from pycreator_core import execute_file, execute_interactive, History
+from pycreator_core import Interpreter, History
 from threading import Thread
 
 
@@ -8,6 +8,7 @@ class Console(Toplevel):
         super(Console, self).__init__(window)
         self.window = window
         self.history = History()
+        self.interpreter = Interpreter(self.write)
 
         self.text = Text(self)
         self.text.pack()
@@ -22,11 +23,11 @@ class Console(Toplevel):
 
     def enter(self, evt):
         code = self.text.get("1.0", "end").split(">>> ")[-1].replace("\n\n", "")
-        execute_interactive(code, self.write)
+        self.interpreter.execute_interactive(code)
         self.text.insert('end', ">>> ")
 
     def execute(self, file):
-        execute_file(file, self.write)
+        self.interpreter.execute_file(file)
         self.text.insert('end', ">>> ")
 
     def write(self, data):
