@@ -38,10 +38,16 @@ class CodeMenu(Menu):
         Documentation(self.window)
 
     def indenter(self, evt=None):  # Can be use by events
-        add_begin_code(self.window, "\t")
+        if self.window.conf.get("use_spaces", True):
+            add_begin_code(self.window, "    ")
+        else:
+            add_begin_code(self.window, "\t")
 
     def desindenter(self, evt=None):  # Can be use by events
-        remove_begin_code(self.window, "\t")
+        if self.window.conf.get("use_spaces", True):
+            remove_begin_code(self.window, "    ")
+        else:
+            remove_begin_code(self.window, "\t")
 
     def comment(self):
         add_begin_code(self.window, "#")
