@@ -41,8 +41,10 @@ class Window(tk.Tk):
         self.bind_all("<Control-KeyPress-i>", self.parametersmenu.open_info)
         self.bind_all("<Control-KeyPress-s>", self.filemenu.save)
         self.bind_all("<Control-KeyPress-d>", self.filemenu.open_folder)
+        self.bind_all("<Alt-KeyPress-c>", self.executemenu.console)
         self.bind_all("<Control-KeyPress-t>", self.codemenu.indenter)
         self.bind_all("<Alt-KeyPress-t>", self.codemenu.desindenter)
+        self.bind_all("<KeyPress-F5>", self.executemenu.execute)
 
     def setup_ui(self):
         self.menu.add_cascade(label="Fichier", menu=self.filemenu)

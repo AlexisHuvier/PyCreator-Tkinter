@@ -12,10 +12,10 @@ class ExecuteMenu(Menu):
         self.add_command(label="Débugguer")
         self.add_command(label="Console", command=self.console)
 
-    def console(self):
+    def console(self, evt=None):  # Can be used by events
         Console(self.window)
 
-    def execute(self):
+    def execute(self, evt=None):  # Can be used by events
         selected = self.window.tabeditor.select()
         if selected:
             Console(self.window, save_code(self.window, selected))
