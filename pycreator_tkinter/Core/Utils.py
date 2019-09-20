@@ -56,7 +56,7 @@ def add_begin_code(window, txt):
                 liste[0] = int(liste[0]) + 1
                 line = str(liste[0]) + ".0"
         except TclError:
-            editor.insert('current linestart', txt)
+            editor.insert('insert linestart', txt)
 
 
 def remove_begin_code(window, txt):
@@ -66,8 +66,8 @@ def remove_begin_code(window, txt):
         try:
             editor.get('sel.first linestart')
         except TclError:
-            begin = 'current linestart'
-            end = 'current lineend'
+            begin = 'insert linestart'
+            end = 'insert'
         else:
             begin = 'sel.first linestart'
             end = 'sel.last'
