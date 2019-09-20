@@ -18,6 +18,6 @@ class ExecuteMenu(Menu):
     def execute(self, evt=None):  # Can be used by events
         selected = self.window.tabeditor.select()
         if selected:
-            Console(self.window, save_code(self.window, selected))
+            Console(self.window, save_code(self.window))
 
 
