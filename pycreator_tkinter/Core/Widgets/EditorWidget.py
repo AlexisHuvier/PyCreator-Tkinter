@@ -1,13 +1,14 @@
 from tkinter import Text, INSERT, LEFT, RIGHT, IntVar
 from tkinter.font import Font
 
-from pycreator_core import FileSystem
+from pycreator_core import FileSystem, get_completion, get_snippet
 
 
 class EditorWidget(Text):
     def __init__(self, parent, file):
         super(EditorWidget, self).__init__(parent, undo=True)
         self.parent = parent
+
         self.file = file
         self.insert('1.0', FileSystem.open(self.file))
 
@@ -24,21 +25,40 @@ class EditorWidget(Text):
         }
         self.setup_hightlighter()
         self.apply_hightlighter()
-        self.bind('<Key>', self.key_pressed)
+        self.bind('<KeyPress>', self.key_pressed)
+        self.bind('<Alt-KeyPress-s>', self.snippet)
+        self.bind('<Alt-KeyPress-a>', self.autocompletion)
         self.bind('<<Modified>>', self.changed)
 
+    def autocompletion(self, evt):
+        code = self.get("insert linestart", "insert lineend")
+        if len(get_completion(code.split(" ")[-1])):
+            self.delete("insert linestart", "insert lineend")
+            self.insert("insert lineend", " ".join(code.split(" ")[:-1]))
+            self.add_code(get_completion(code.split(" ")[-1])[0])
+            self.mark_set("insert", "insert lineend")
+
+    def snippet(self, evt):
+        code = self.get("insert linestart", "insert lineend")
+        self.delete("insert linestart", "insert lineend")
+        self.insert("insert lineend", " ".join(code.split(" ")[:-1]))
+        self.add_code(get_snippet(code.split(" ")[-1]))
+        self.mark_set("insert", "insert lineend")
+
     def key_pressed(self, e):
-        self.mark_gravity(INSERT, LEFT)
-        self.insert("insert", self.parent.window.analyser.update_code(e.char))
-        self.mark_gravity(INSERT, RIGHT)
+        self.add_code(self.parent.window.analyser.update_code(e.char))
 
     def changed(self, value=None):
         flag = self.edit_modified()
         if flag:
             self.apply_hightlighter()
-
-            self.parent.tab(self, text=self.file + "*")
         self.edit_modified(False)
+
+    def add_code(self, code):
+        self.parent.tab(self, text=self.file + "*")
+        self.mark_gravity(INSERT, LEFT)
+        self.insert("insert", code)
+        self.mark_gravity(INSERT, RIGHT)
 
     def setup_hightlighter(self):
         for k, v in self.tags.items():
