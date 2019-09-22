@@ -39,6 +39,7 @@ class Window(tk.Tk):
         self.bind_all("<Control-KeyPress-o>", self.filemenu.open_file)
         self.bind_all("<Control-KeyPress-n>", self.filemenu.new)
         self.bind_all("<Control-KeyPress-i>", self.parametersmenu.open_info)
+        self.bind_all("<Control-KeyPress-p>", self.parametersmenu.open_parameters)
         self.bind_all("<Control-KeyPress-s>", self.filemenu.save)
         self.bind_all("<Control-KeyPress-d>", self.filemenu.open_folder)
         self.bind_all("<Alt-KeyPress-c>", self.executemenu.console)

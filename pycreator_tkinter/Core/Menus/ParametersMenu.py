@@ -5,7 +5,7 @@ from tkinter.ttk import __version__
 import pycreator_core
 
 import pycreator_tkinter
-from pycreator_tkinter.Core.Windows import TextWindow, Themes
+from pycreator_tkinter.Core.Windows import TextWindow, Themes, Parameters
 
 
 class ParametersMenu(Menu):
@@ -15,9 +15,12 @@ class ParametersMenu(Menu):
 
         self.add_command(label="Thèmes", command=self.open_theme)
         self.add_command(label="Addons")
-        self.add_command(label="Paramètres")
+        self.add_command(label="Paramètres", command=self.open_parameters)
         self.add_separator()
         self.add_command(label="A Propos", command=self.open_info)
+
+    def open_parameters(self, evt=None):  # Can be use by events
+        Parameters(self.window)
 
     def open_info(self, evt=None):  # Can be use by events
         v = str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro)
